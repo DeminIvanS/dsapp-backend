@@ -1,0 +1,19 @@
+version: '3.8'
+
+volumes:
+  dsapp_data:
+
+services:
+  pg_db:
+    image: postgres:15-alpine
+    container_name: dance_school_db
+    restart: always
+    environment:
+      - POSTGRES_USER=dsapp_admin
+      - POSTGRES_PASSWORD=secure_pass_123
+      - POSTGRES_DB=dsapp_db
+    volumes:
+      - dsapp_data:/var/lib/postgresql/data
+      - ./DB/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
