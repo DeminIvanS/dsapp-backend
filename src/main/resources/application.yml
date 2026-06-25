@@ -15,9 +15,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yml
-    user: dsapp_admin
-    password: secure_pass_123
 
 logging:
   level:
     root: INFO
+    liquibase: DEBUG
