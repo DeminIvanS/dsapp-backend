@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: dsapp-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/dsapp_db
+    username: dsapp_admin
+    password: secure_pass_123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yml
+    user: dsapp_admin
+    password: secure_pass_123
+
+logging:
+  level:
+    root: INFO
