@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ivan
+      changes:
+        - sqlFile:
+            path: changesets/01-create-initial-tables.sql
+            relativeToChangelogFile: true
