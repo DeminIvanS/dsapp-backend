@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 public class TeacherDto {
     private Long id;
-    private User user;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -28,17 +28,17 @@ public class TeacherDto {
     public static TeacherDto from(Teacher teacher){
         TeacherDto dto = new TeacherDto();
         dto.id = teacher.getId();
-        dto.user = teacher.getUser();
+        dto.userId = teacher.getUser().getId();
         dto.firstName = teacher.getFirstName();
         dto.lastName = teacher.getLastName();
         dto.patronymic = teacher.getPatronymic();
         dto.createdAt = teacher.getCreatedAt();
         return dto;
     }
-    public Teacher toEntity(){
+    public Teacher toEntity(User user){
         Teacher teacher = new Teacher();
         teacher.setId(this.id);
-        teacher.setUser(this.user);
+        teacher.setUser(user);
         teacher.setFirstName(this.firstName);
         teacher.setLastName(this.lastName);
         teacher.setPatronymic(this.patronymic);
@@ -54,12 +54,12 @@ public class TeacherDto {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

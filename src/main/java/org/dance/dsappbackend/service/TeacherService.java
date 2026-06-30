@@ -2,7 +2,9 @@ package org.dance.dsappbackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.dance.dsappbackend.dto.TeacherDto;
+import org.dance.dsappbackend.entity.User;
 import org.dance.dsappbackend.repository.TeacherRepository;
+import org.dance.dsappbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +13,12 @@ import java.util.List;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final UserRepository userRepository;
 
 
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository, UserRepository userRepository) {
         this.teacherRepository = teacherRepository;
+        this.userRepository = userRepository;
     }
     public TeacherDto findById(Long id){
         return teacherRepository.findById(id)
@@ -31,12 +35,16 @@ public class TeacherService {
     }
 
     public TeacherDto create(TeacherDto dto){
-        var entity = dto.toEntity();
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(()-> new RuntimeException("User not found"));
+        var entity = dto.toEntity(user);
         return TeacherDto.from(teacherRepository.save(entity));
     }
 
     public void update(Long id, TeacherDto dto){
-        var entity = dto.toEntity();
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(()-> new RuntimeException("User not found"));
+        var entity = dto.toEntity(user);
         entity.setId(id);
         teacherRepository.save(entity);
     }

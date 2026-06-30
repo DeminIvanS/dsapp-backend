@@ -1,7 +1,8 @@
 package org.dance.dsappbackend.controller;
 
-import org.dance.dsappbackend.dto.BranchDto;
-import org.dance.dsappbackend.service.BranchService;
+
+import org.dance.dsappbackend.dto.HallDto;
+import org.dance.dsappbackend.service.HallService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,34 +11,35 @@ import java.util.List;
 @RequestMapping("/api/halls")
 public class HallController {
 
-    private final BranchService branchService;
+    private final HallService hallService;
 
-    public HallController(BranchService branchService) {
-        this.branchService = branchService;
+    public HallController(HallService hallService) {
+        this.hallService = hallService;
+
     }
 
     @GetMapping("/{id}")
-    public BranchDto getById(@PathVariable Long id) {
-        return branchService.findById(id);
+    public HallDto getById(@PathVariable Long id) {
+        return hallService.findById(id);
     }
 
     @GetMapping
-    public List<BranchDto> getAll() {
-        return branchService.findAll();
+    public List<HallDto> getAll() {
+        return hallService.findAll();
     }
 
     @PostMapping
-    public BranchDto create(@RequestBody BranchDto dto) {
-        return branchService.create(dto);
+    public HallDto create(@RequestBody HallDto dto) {
+        return hallService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody BranchDto dto) {
-       branchService.update(id,dto);
+    public void update(@PathVariable Long id, @RequestBody HallDto dto) {
+       hallService.update(id,dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        branchService.delete(id);
+        hallService.delete(id);
     }
 }

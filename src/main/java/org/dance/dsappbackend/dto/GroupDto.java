@@ -6,14 +6,6 @@ import org.dance.dsappbackend.entity.Teacher;
 
 import java.time.LocalDateTime;
 
-/*Table groups {
-  id integer [primary key]
-  branch_id integer [not null]
-  teacher_id integer [not null]             // Основной педагог
-  name varchar(100) [not null]
-  age_range varchar(50)
-  created_at timestamp [default: `now()`]
-}*/
 
 public class GroupDto {
     private Long id;
@@ -38,6 +30,7 @@ public class GroupDto {
     }
     public Group toEntity(Branch branch, Teacher teacher){
         Group group = new Group();
+        group.setId(this.id);
         group.setBranch(branch);
         group.setTeacher(teacher);
         group.setName(this.name);

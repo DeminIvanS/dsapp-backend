@@ -1,7 +1,6 @@
 package org.dance.dsappbackend.dto;
 
 import org.dance.dsappbackend.entity.Branch;
-
 import java.time.LocalDateTime;
 
 public class BranchDto {

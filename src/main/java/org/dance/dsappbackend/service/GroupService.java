@@ -3,7 +3,6 @@ package org.dance.dsappbackend.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.dance.dsappbackend.dto.GroupDto;
 import org.dance.dsappbackend.entity.Branch;
-import org.dance.dsappbackend.entity.Group;
 import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.repository.BranchRepository;
 import org.dance.dsappbackend.repository.GroupRepository;
@@ -44,16 +43,17 @@ public class GroupService {
     public GroupDto create(GroupDto dto){
         Branch branch = branchRepository.findById(dto.getBranchId())
                 .orElseThrow(()-> new RuntimeException("Branch not found"));
-        Teacher teacher = teacherRepository.findById(dto.getBranchId())
+        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(()-> new RuntimeException("Teacher not found"));
         var entity = dto.toEntity(branch,teacher);
         return GroupDto.from(groupRepository.save(entity));
     }
 
     public void update(Long id, GroupDto dto){
+
         Branch branch = branchRepository.findById(dto.getBranchId())
                 .orElseThrow(()-> new RuntimeException("Branch not found"));
-        Teacher teacher = teacherRepository.findById(dto.getBranchId())
+        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(()-> new RuntimeException("Teacher not found"));
         var entity = dto.toEntity(branch,teacher);
         entity.setId(id);
