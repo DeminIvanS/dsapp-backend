@@ -23,7 +23,9 @@ public class Student {
     private LocalDate birthdate;
     private String parentName;
     private String phone;
+    @Column(name = "referral_source")
     private String referralSource;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Group> groups = new ArrayList<>();

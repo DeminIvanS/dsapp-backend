@@ -19,6 +19,7 @@ public class Group {
     @JoinColumn(name = "teacher_id",nullable = false)
     private Teacher teacher;
     private String name;
+    @Column(name = "age_range")
     private String ageRange;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
