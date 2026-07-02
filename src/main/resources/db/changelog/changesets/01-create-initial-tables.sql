@@ -15,7 +15,7 @@ payments,
 payment_charges;
 
 CREATE TABLE if not exists users (
-                       id SERIAL PRIMARY KEY,
+                       id BIGSERIAL PRIMARY KEY,
                        login VARCHAR(100) NOT NULL UNIQUE,
                        password_hash VARCHAR(255) NOT NULL,
                        role VARCHAR(20) NOT NULL,
@@ -24,14 +24,14 @@ CREATE TABLE if not exists users (
 );
 
 CREATE TABLE if not exists branches (
-                          id SERIAL PRIMARY KEY,
+                          id BIGSERIAL PRIMARY KEY,
                           name VARCHAR(100) NOT NULL,
                           address VARCHAR(255) NOT NULL,
                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE if not exists price_list_items (
-                                  id SERIAL PRIMARY KEY,
+                                  id BIGSERIAL PRIMARY KEY,
                                   name VARCHAR(255) NOT NULL,
                                   price NUMERIC(10, 2) NOT NULL,
                                   valid_from DATE NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE if not exists price_list_items (
 );
 
 CREATE TABLE if not exists teachers (
-                          id SERIAL PRIMARY KEY,
+                          id BIGSERIAL PRIMARY KEY,
                           user_id INT NOT NULL UNIQUE,
                           first_name VARCHAR(100) NOT NULL,
                           last_name VARCHAR(100) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE if not exists teachers (
 );
 
 CREATE TABLE if not exists students (
-                          id SERIAL PRIMARY KEY,
+                          id BIGSERIAL PRIMARY KEY,
                           user_id INT NOT NULL UNIQUE,
                           first_name VARCHAR(100) NOT NULL,
                           last_name VARCHAR(100) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE if not exists students (
 );
 
 CREATE TABLE if not exists halls (
-                       id SERIAL PRIMARY KEY,
+                       id BIGSERIAL PRIMARY KEY,
                        branch_id INT NOT NULL,
                        name VARCHAR(100) NOT NULL,
                        description VARCHAR(255),
@@ -73,7 +73,7 @@ CREATE TABLE if not exists halls (
 );
 
 CREATE TABLE if not exists groups (
-                        id SERIAL PRIMARY KEY,
+                        id BIGSERIAL PRIMARY KEY,
                         branch_id INT NOT NULL,
                         teacher_id INT NOT NULL,
                         name VARCHAR(100) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE if not exists student_groups (
 );
 
 CREATE TABLE if not exists schedule_templates (
-                                    id SERIAL PRIMARY KEY,
+                                    id BIGSERIAL PRIMARY KEY,
                                     group_id INT NOT NULL,
                                     teacher_id INT NOT NULL,
                                     hall_id INT NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE if not exists schedule_templates (
 );
 
 CREATE TABLE if not exists classes (
-                         id SERIAL PRIMARY KEY,
+                         id BIGSERIAL PRIMARY KEY,
                          template_id INT,
                          group_id INT NOT NULL,
                          teacher_id INT NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE if not exists classes (
 );
 
 CREATE TABLE if not exists attendance (
-                            id SERIAL PRIMARY KEY,
+                            id BIGSERIAL PRIMARY KEY,
                             class_id INT NOT NULL,
                             student_id INT NOT NULL,
                             is_present BOOLEAN NOT NULL DEFAULT TRUE,
@@ -133,7 +133,7 @@ CREATE TABLE if not exists attendance (
 );
 
 CREATE TABLE if not exists charges (
-                         id SERIAL PRIMARY KEY,
+                         id BIGSERIAL PRIMARY KEY,
                          student_id INT NOT NULL,
                          price_list_item_id INT NOT NULL,
                          amount NUMERIC(10, 2) NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE if not exists charges (
 );
 
 CREATE TABLE if not exists payments (
-                          id SERIAL PRIMARY KEY,
+                          id BIGSERIAL PRIMARY KEY,
                           student_id INT NOT NULL,
                           amount NUMERIC(10, 2) NOT NULL,
                           payment_date DATE NOT NULL DEFAULT CURRENT_DATE,
