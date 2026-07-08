@@ -19,10 +19,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     private Role role;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
     public enum Role {
         ROLE_USER,
-        ROLE_ADMIN
+        ROLE_ADMIN,
+        ROLE_TEACHER
     }
 
     public String getUsername() {
@@ -55,5 +58,13 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

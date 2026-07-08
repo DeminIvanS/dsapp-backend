@@ -20,11 +20,11 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        String message  = authService.register(request);
+    public ResponseEntity<String> createUser(@RequestBody RegisterRequest request) {
+        String message  = authService.createUser(request);
         return ResponseEntity.ok(message);
     }
 

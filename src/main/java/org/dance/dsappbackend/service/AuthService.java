@@ -34,7 +34,7 @@ public class AuthService {
      *
      * @throws IllegalArgumentException если username уже занят
      */
-    public String register(RegisterRequest request) {
+    public String createUser(RegisterRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Username '" + request.username() + "' is already taken");
         }
