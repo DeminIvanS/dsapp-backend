@@ -20,3 +20,9 @@ logging:
   level:
     root: INFO
     liquibase: DEBUG
+jwt:
+  # Секрет должен быть не менее 256 бит (32 символа) для HS256.
+  # В продакшене выносить в переменную окружения.
+  secret: "jwt-demo-secret-key-must-be-at-least-256-bits-long-for-hs256-algorithm"
+  access-token-expiration: 900000      # 15 минут в миллисекундах
+  refresh-token-expiration: 604800000  # 7 дней в миллисекундах

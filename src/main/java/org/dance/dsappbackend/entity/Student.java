@@ -17,10 +17,14 @@ public class Student {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String patronymic;
+    @Column(name = "birth_date")
     private LocalDate birthdate;
+    @Column(name = "parent_name")
     private String parentName;
     private String phone;
     @Column(name = "referral_source")
