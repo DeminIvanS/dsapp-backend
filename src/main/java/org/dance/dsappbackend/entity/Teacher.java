@@ -19,7 +19,7 @@ public class Teacher {
     @Column(name = "last_name",nullable = false, length = 100)
     private String lastName;
     private String patronymic;
-    @Column(name = "created_at",updatable = false)
+    @Column(name = "created_at",updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
     public Teacher() {
