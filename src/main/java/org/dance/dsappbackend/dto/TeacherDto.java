@@ -5,14 +5,7 @@ import org.dance.dsappbackend.entity.User;
 
 
 import java.time.LocalDateTime;
-/*Table teachers {
-  id integer [primary key]
-  user_id integer [not null, unique]
-  first_name varchar(100) [not null]
-  last_name varchar(100) [not null]
-  patronymic varchar(100)
-  created_at timestamp [default: `now()`]
-}*/
+
 
 public class TeacherDto {
     private Long id;
