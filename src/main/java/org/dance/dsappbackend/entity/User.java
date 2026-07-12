@@ -29,7 +29,8 @@ public class User {
     public enum Role {
         ROLE_USER,
         ROLE_ADMIN,
-        ROLE_TEACHER
+        ROLE_TEACHER,
+        ROLE_STUDENT
     }
 
     public String getUsername() {

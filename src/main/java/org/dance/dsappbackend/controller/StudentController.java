@@ -1,5 +1,7 @@
 package org.dance.dsappbackend.controller;
 
+import org.dance.dsappbackend.dto.CreateStudentDto;
+import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.dto.StudentDto;
 import org.dance.dsappbackend.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,8 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentDto create(@RequestBody StudentDto dto) {
-        return studentService.create(dto);
+    public CreatedUserDto create(@RequestBody CreateStudentDto dto) {
+        return studentService.createStudent(dto);
     }
 
     @PutMapping("/{id}")
