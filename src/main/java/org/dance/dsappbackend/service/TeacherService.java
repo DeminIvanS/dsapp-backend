@@ -41,7 +41,7 @@ public class TeacherService {
     }
     @Transactional
     public CreatedUserDto createTeacher(CreateTeacherDto dto){
-        String tempPassword = "12345";
+        String tempPassword = TempGeneratorPass.passGenerate();
         String passwordHash = passwordEncoder.encode(tempPassword);//TODO: генератор пароля
         User user = dto.toUserEntity(passwordHash);
         User savedUser = userRepository.save(user);
