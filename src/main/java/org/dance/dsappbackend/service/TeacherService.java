@@ -20,45 +20,48 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TemporaryPasswordGenerator passwordGenerator = new TemporaryPasswordGenerator();
 
     public TeacherService(TeacherRepository teacherRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.teacherRepository = teacherRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    public TeacherDto findById(Long id){
+
+    public TeacherDto findById(Long id) {
         return teacherRepository.findById(id)
                 .map(TeacherDto::from)
-                .orElseThrow(()->new EntityNotFoundException("Teacher with id=" +id+" not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher with id=" + id + " not found."));
 
     }
 
-    public List<TeacherDto> findAll(){
+    public List<TeacherDto> findAll() {
         return teacherRepository.findAll()
                 .stream()
                 .map(TeacherDto::from)
                 .toList();
     }
+
     @Transactional
-    public CreatedUserDto createTeacher(CreateTeacherDto dto){
-        String tempPassword = TempGeneratorPass.passGenerate();
-        String passwordHash = passwordEncoder.encode(tempPassword);//TODO: генератор пароля
+    public CreatedUserDto createTeacher(CreateTeacherDto dto) {
+        String tempPassword = passwordGenerator.generatePassword();
+        String passwordHash = passwordEncoder.encode(tempPassword);
         User user = dto.toUserEntity(passwordHash);
         User savedUser = userRepository.save(user);
         Teacher teacher = dto.toTeacherEntity(savedUser);
         Teacher savedTeacher = teacherRepository.save(teacher);
-        return new CreatedUserDto(savedUser.getUsername(),tempPassword);
+        return new CreatedUserDto(savedUser.getUsername(), tempPassword);
     }
 
-    public void update(Long id, TeacherDto dto){
+    public void update(Long id, TeacherDto dto) {
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(()-> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         var entity = dto.toEntity(user);
         entity.setId(id);
         teacherRepository.save(entity);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         teacherRepository.deleteById(id);
     }
 

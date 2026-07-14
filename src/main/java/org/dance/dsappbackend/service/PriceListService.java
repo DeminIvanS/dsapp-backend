@@ -18,32 +18,32 @@ public class PriceListService {
     }
 
 
-    public PriceListDto findById(Long id){
+    public PriceListDto findById(Long id) {
         return priceListRepository.findById(id)
                 .map(PriceListDto::from)
-                .orElseThrow(()->new EntityNotFoundException("Price list with id=" +id+" not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Price list with id=" + id + " not found."));
 
     }
 
-    public List<PriceListDto> findAll(){
+    public List<PriceListDto> findAll() {
         return priceListRepository.findAll()
                 .stream()
                 .map(PriceListDto::from)
                 .toList();
     }
 
-    public PriceListDto create(PriceListDto dto){
+    public PriceListDto create(PriceListDto dto) {
         var entity = dto.toEntity();
         return PriceListDto.from(priceListRepository.save(entity));
     }
 
-    public void update(Long id, PriceListDto dto){
+    public void update(Long id, PriceListDto dto) {
         var entity = dto.toEntity();
         entity.setId(id);
         priceListRepository.save(entity);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         priceListRepository.deleteById(id);
     }
 
