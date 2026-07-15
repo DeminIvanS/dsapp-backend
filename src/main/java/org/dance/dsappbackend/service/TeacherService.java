@@ -20,12 +20,13 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TemporaryPasswordGenerator passwordGenerator = new TemporaryPasswordGenerator();
+    private final TemporaryPasswordGenerator passwordGenerator;
 
-    public TeacherService(TeacherRepository teacherRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public TeacherService(TeacherRepository teacherRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, TemporaryPasswordGenerator passwordGenerator) {
         this.teacherRepository = teacherRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.passwordGenerator = passwordGenerator;
     }
 
     public TeacherDto findById(Long id) {

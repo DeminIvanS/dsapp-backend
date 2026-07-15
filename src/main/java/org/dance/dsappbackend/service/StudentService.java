@@ -20,12 +20,13 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TemporaryPasswordGenerator passwordGenerator = new TemporaryPasswordGenerator();
+    private final TemporaryPasswordGenerator passwordGenerator;
 
-    public StudentService(StudentRepository studentRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public StudentService(StudentRepository studentRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, TemporaryPasswordGenerator passwordGenerator) {
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.passwordGenerator = passwordGenerator;
     }
 
     public StudentDto findById(Long id) {

@@ -1,15 +1,13 @@
 package org.dance.dsappbackend.service;
 
+import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
+@Component
 public class TemporaryPasswordGenerator {
     private final SecureRandom random = new SecureRandom();
-
     public String generatePassword() {
-        StringBuilder sb = new StringBuilder("KID-");
-        for (int i = 0; i < 6; i++) {
-            sb.append(random.nextInt(10));
-        }
-        return sb.toString();
+        String digits = String.format("%06d", random.nextInt(1000000));
+        return "KID-" + digits;
     }
 }
