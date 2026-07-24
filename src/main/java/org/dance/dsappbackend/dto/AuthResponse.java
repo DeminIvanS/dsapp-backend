@@ -1,8 +1,6 @@
 package org.dance.dsappbackend.dto;
 
 
-
-
 public record AuthResponse(
 
 

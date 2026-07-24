@@ -13,10 +13,10 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "branch_id",nullable = false)
+    @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id",nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
     private String name;
     @Column(name = "age_range")
@@ -28,6 +28,7 @@ public class Group {
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
+
     public Group() {
     }
 

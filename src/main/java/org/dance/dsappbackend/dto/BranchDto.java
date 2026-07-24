@@ -1,6 +1,7 @@
 package org.dance.dsappbackend.dto;
 
 import org.dance.dsappbackend.entity.Branch;
+
 import java.time.LocalDateTime;
 
 public class BranchDto {
@@ -12,7 +13,7 @@ public class BranchDto {
     public BranchDto() {
     }
 
-    public static BranchDto from(Branch branch){
+    public static BranchDto from(Branch branch) {
         BranchDto dto = new BranchDto();
         dto.id = branch.getId();
         dto.name = branch.getName();
@@ -20,7 +21,8 @@ public class BranchDto {
         dto.createdAt = branch.getCreatedAt();
         return dto;
     }
-    public Branch toEntity(){
+
+    public Branch toEntity() {
         Branch branch = new Branch();
         branch.setId(this.id);
         branch.setName(this.name);

@@ -18,7 +18,7 @@ public class GroupDto {
     public GroupDto() {
     }
 
-    public static GroupDto from(Group group){
+    public static GroupDto from(Group group) {
         GroupDto dto = new GroupDto();
         dto.id = group.getId();
         dto.branchId = group.getBranch().getId();
@@ -28,7 +28,8 @@ public class GroupDto {
         dto.createdAt = group.getCreatedAt();
         return dto;
     }
-    public Group toEntity(Branch branch, Teacher teacher){
+
+    public Group toEntity(Branch branch, Teacher teacher) {
         Group group = new Group();
         group.setId(this.id);
         group.setBranch(branch);

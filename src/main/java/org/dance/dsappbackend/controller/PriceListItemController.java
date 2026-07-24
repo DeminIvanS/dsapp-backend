@@ -34,7 +34,7 @@ public class PriceListItemController {
 
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody PriceListDto dto) {
-       priceListService.update(id,dto);
+        priceListService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")

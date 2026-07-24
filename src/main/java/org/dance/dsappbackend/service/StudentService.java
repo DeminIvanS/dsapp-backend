@@ -2,11 +2,11 @@ package org.dance.dsappbackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.dance.dsappbackend.dto.CreateStudentDto;
 import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.dto.StudentDto;
 import org.dance.dsappbackend.entity.Student;
 import org.dance.dsappbackend.entity.User;
+import org.dance.dsappbackend.mappers.StudentMapper;
 import org.dance.dsappbackend.repository.StudentRepository;
 import org.dance.dsappbackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,7 +44,7 @@ public class StudentService {
     }
 
     @Transactional
-    public CreatedUserDto createStudent(CreateStudentDto dto) {
+    public CreatedUserDto createStudent(StudentMapper dto) {
         String tempPassword = passwordGenerator.generatePassword();
         String passwordHash = passwordEncoder.encode(tempPassword);
         User user = dto.toUserEntity(passwordHash);

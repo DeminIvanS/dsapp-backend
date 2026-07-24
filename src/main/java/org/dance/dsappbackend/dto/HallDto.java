@@ -14,7 +14,7 @@ public class HallDto {
     private LocalDateTime createdAt;
 
 
-    public static HallDto from(Hall hall){
+    public static HallDto from(Hall hall) {
         HallDto dto = new HallDto();
         dto.branchId = hall.getBranch().getId();
         dto.id = hall.getId();
@@ -23,7 +23,8 @@ public class HallDto {
         dto.createdAt = hall.getCreatedAt();
         return dto;
     }
-    public Hall toEntity(Branch branch){
+
+    public Hall toEntity(Branch branch) {
         Hall hall = new Hall();
         hall.setId(this.id);
         hall.setBranch(branch);

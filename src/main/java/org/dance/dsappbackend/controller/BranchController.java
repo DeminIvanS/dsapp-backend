@@ -33,7 +33,7 @@ public class BranchController {
 
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody BranchDto dto) {
-       branchService.update(id,dto);
+        branchService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")

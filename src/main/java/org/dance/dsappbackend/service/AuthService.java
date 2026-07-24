@@ -3,8 +3,8 @@ package org.dance.dsappbackend.service;
 
 import org.dance.dsappbackend.dto.AuthResponse;
 import org.dance.dsappbackend.dto.LoginRequest;
-import org.dance.dsappbackend.dto.RegisterRequest;
 import org.dance.dsappbackend.dto.RefreshRequest;
+import org.dance.dsappbackend.dto.RegisterRequest;
 import org.dance.dsappbackend.entity.User;
 import org.dance.dsappbackend.repository.UserRepository;
 import org.dance.dsappbackend.security.JwtTokenProvider;
@@ -39,12 +39,12 @@ public class AuthService {
             throw new IllegalArgumentException("Username '" + request.username() + "' is already taken");
         }
 
-        User user = new User( );
+        User user = new User();
         user.setUsername(request.username());
         user.setPassword(passwordEncoder.encode(request.password()));
-        if(request.role() != null){
+        if (request.role() != null) {
             user.setRole(request.role());
-        }else{
+        } else {
             user.setRole(User.Role.ROLE_USER);
         }
         userRepository.save(user);
