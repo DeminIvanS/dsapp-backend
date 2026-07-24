@@ -20,6 +20,7 @@ CREATE TABLE if not exists users (
                        password_hash VARCHAR(255) NOT NULL,
                        role VARCHAR(20) NOT NULL,
                        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                       must_change_password boolean not null default false,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

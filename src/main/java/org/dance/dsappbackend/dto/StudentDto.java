@@ -5,17 +5,6 @@ import org.dance.dsappbackend.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-/* id integer [primary key]
-  user_id integer [not null, unique]
-  first_name varchar(100) [not null]        // ФИО ребёнка
-  last_name varchar(100) [not null]
-  patronymic varchar(100)
-  birth_date date [not null]
-  parent_name varchar(255) [not null]       // ФИО родителя / ответственного
-  phone varchar(20) [not null]
-  referral_source varchar(255)              // Откуда узнали о школе
-  created_at timestamp [default: `now()`]
-}*/
 
 public class StudentDto {
     private Long id;
