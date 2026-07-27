@@ -3,6 +3,7 @@ package org.dance.dsappbackend.dto;
 import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.entity.User;
 
+
 import java.time.LocalDateTime;
 
 
@@ -17,7 +18,7 @@ public class TeacherDto {
     public TeacherDto() {
     }
 
-    public static TeacherDto from(Teacher teacher) {
+    public static TeacherDto from(Teacher teacher){
         TeacherDto dto = new TeacherDto();
         dto.id = teacher.getId();
         dto.userId = teacher.getUser().getId();
@@ -27,8 +28,7 @@ public class TeacherDto {
         dto.createdAt = teacher.getCreatedAt();
         return dto;
     }
-
-    public Teacher toEntity(User user) {
+    public Teacher toEntity(User user){
         Teacher teacher = new Teacher();
         teacher.setId(this.id);
         teacher.setUser(user);

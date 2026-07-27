@@ -24,7 +24,7 @@ public class AuthController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createUser(@RequestBody RegisterRequest request) {
-        String message = authService.createUser(request);
+        String message  = authService.createUser(request);
         return ResponseEntity.ok(message);
     }
 

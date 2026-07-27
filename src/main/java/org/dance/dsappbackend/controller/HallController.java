@@ -35,7 +35,7 @@ public class HallController {
 
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody HallDto dto) {
-        hallService.update(id, dto);
+       hallService.update(id,dto);
     }
 
     @DeleteMapping("/{id}")

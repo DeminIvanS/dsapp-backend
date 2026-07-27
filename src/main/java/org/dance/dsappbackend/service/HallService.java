@@ -20,37 +20,36 @@ public class HallService {
         this.hallRepository = hallRepository;
         this.branchRepository = branchRepository;
     }
-
-    public HallDto findById(Long id) {
+    public HallDto findById(Long id){
         return hallRepository.findById(id)
                 .map(HallDto::from)
-                .orElseThrow(() -> new EntityNotFoundException("Hall with id=" + id + " not found."));
+                .orElseThrow(()->new EntityNotFoundException("Hall with id=" +id+" not found."));
 
     }
 
-    public List<HallDto> findAll() {
+    public List<HallDto> findAll(){
         return hallRepository.findAll()
                 .stream()
                 .map(HallDto::from)
                 .toList();
     }
 
-    public HallDto create(HallDto dto) {
+    public HallDto create(HallDto dto){
         Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new RuntimeException("Branch not found"));
+                .orElseThrow(()-> new RuntimeException("Branch not found"));
         var entity = dto.toEntity(branch);
         return HallDto.from(hallRepository.save(entity));
     }
 
-    public void update(Long id, HallDto dto) {
+    public void update(Long id, HallDto dto){
         Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new RuntimeException("Branch not found"));
+                .orElseThrow(()-> new RuntimeException("Branch not found"));
         var entity = dto.toEntity(branch);
         entity.setId(id);
         hallRepository.save(entity);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id){
         hallRepository.deleteById(id);
     }
 

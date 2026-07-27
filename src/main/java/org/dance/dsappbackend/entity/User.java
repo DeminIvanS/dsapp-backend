@@ -1,6 +1,7 @@
 package org.dance.dsappbackend.entity;
 
 import jakarta.persistence.*;
+import org.dance.dsappbackend.dto.RegisterRequest;
 
 
 @Entity

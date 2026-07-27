@@ -33,7 +33,7 @@ public class GroupsController {
 
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody GroupDto dto) {
-        groupService.update(id, dto);
+       groupService.update(id,dto);
     }
 
     @DeleteMapping("/{id}")

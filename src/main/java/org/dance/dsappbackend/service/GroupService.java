@@ -25,42 +25,42 @@ public class GroupService {
         this.teacherRepository = teacherRepository;
     }
 
-    public GroupDto findById(Long id) {
+    public GroupDto findById(Long id){
 
         return groupRepository.findById(id)
                 .map(GroupDto::from)
-                .orElseThrow(() -> new EntityNotFoundException("Group with id=" + id + " not found."));
+                .orElseThrow(()->new EntityNotFoundException("Group with id=" +id+" not found."));
 
     }
 
-    public List<GroupDto> findAll() {
+    public List<GroupDto> findAll(){
         return groupRepository.findAll()
                 .stream()
                 .map(GroupDto::from)
                 .toList();
     }
 
-    public GroupDto create(GroupDto dto) {
+    public GroupDto create(GroupDto dto){
         Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new RuntimeException("Branch not found"));
+                .orElseThrow(()-> new RuntimeException("Branch not found"));
         Teacher teacher = teacherRepository.findById(dto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found"));
-        var entity = dto.toEntity(branch, teacher);
+                .orElseThrow(()-> new RuntimeException("Teacher not found"));
+        var entity = dto.toEntity(branch,teacher);
         return GroupDto.from(groupRepository.save(entity));
     }
 
-    public void update(Long id, GroupDto dto) {
+    public void update(Long id, GroupDto dto){
 
         Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new RuntimeException("Branch not found"));
+                .orElseThrow(()-> new RuntimeException("Branch not found"));
         Teacher teacher = teacherRepository.findById(dto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found"));
-        var entity = dto.toEntity(branch, teacher);
+                .orElseThrow(()-> new RuntimeException("Teacher not found"));
+        var entity = dto.toEntity(branch,teacher);
         entity.setId(id);
         groupRepository.save(entity);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id){
         groupRepository.deleteById(id);
     }
 

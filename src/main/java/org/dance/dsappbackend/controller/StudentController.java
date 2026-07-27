@@ -1,8 +1,8 @@
 package org.dance.dsappbackend.controller;
 
+import org.dance.dsappbackend.dto.CreateStudentDto;
 import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.dto.StudentDto;
-import org.dance.dsappbackend.mappers.StudentMapper;
 import org.dance.dsappbackend.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,13 +29,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public CreatedUserDto create(@RequestBody StudentMapper dto) {
+    public CreatedUserDto create(@RequestBody CreateStudentDto dto) {
         return studentService.createStudent(dto);
     }
 
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody StudentDto dto) {
-        studentService.update(id, dto);
+       studentService.update(id,dto);
     }
 
     @DeleteMapping("/{id}")

@@ -1,16 +1,17 @@
-package org.dance.dsappbackend.mappers;
+package org.dance.dsappbackend.dto;
 
 import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.entity.User;
 
-public record TeacherMapper(
+public record CreateTeacherDto(
         String username,
         String firstName,
         String lastName,
         String patronymic
-) {
+)
+{
 
-    public User toUserEntity(String password) {
+    public User toUserEntity(String password){
         User user = new User();
         user.setUsername(this.username);
         user.setPassword(password);
@@ -20,7 +21,7 @@ public record TeacherMapper(
         return user;
     }
 
-    public Teacher toTeacherEntity(User user) {
+    public Teacher toTeacherEntity(User user){
         Teacher teacher = new Teacher();
         teacher.setUser(user);
         teacher.setFirstName(this.firstName);

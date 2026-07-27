@@ -22,7 +22,7 @@ public class StudentDto {
     public StudentDto() {
     }
 
-    public static StudentDto from(Student student) {
+    public static StudentDto from(Student student){
         StudentDto dto = new StudentDto();
         dto.id = student.getId();
         dto.userId = student.getUser().getId();
@@ -36,8 +36,7 @@ public class StudentDto {
         dto.createdAt = student.getCreatedAt();
         return dto;
     }
-
-    public Student toEntity(User user) {
+    public Student toEntity(User user){
         Student student = new Student();
         student.setId(this.id);
         student.setUser(user);

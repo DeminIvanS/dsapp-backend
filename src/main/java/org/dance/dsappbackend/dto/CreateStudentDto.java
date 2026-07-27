@@ -1,11 +1,12 @@
-package org.dance.dsappbackend.mappers;
+package org.dance.dsappbackend.dto;
 
 import org.dance.dsappbackend.entity.Student;
+import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.entity.User;
 
 import java.time.LocalDate;
 
-public record StudentMapper(
+public record CreateStudentDto(
         String username,
         String firstName,
         String lastName,
@@ -15,7 +16,7 @@ public record StudentMapper(
         String phone,
         String referralSource
 ) {
-    public User toUserEntity(String password) {
+    public User toUserEntity(String password){
         User user = new User();
         user.setUsername(this.username);
         user.setPassword(password);
@@ -24,8 +25,7 @@ public record StudentMapper(
         user.setMustChangePassword(true);
         return user;
     }
-
-    public Student toStudentEntity(User user) {
+    public Student toStudentEntity(User user){
         Student student = new Student();
         student.setUser(user);
         student.setFirstName(this.firstName);

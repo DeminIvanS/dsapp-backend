@@ -1,7 +1,7 @@
 package org.dance.dsappbackend.dto;
 
+import jakarta.persistence.*;
 import org.dance.dsappbackend.entity.PriceList;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class PriceListDto {
     }
 
 
-    public static PriceListDto from(PriceList priceList) {
+    public static PriceListDto from(PriceList priceList){
         PriceListDto dto = new PriceListDto();
         dto.id = priceList.getId();
         dto.name = priceList.getName();
@@ -29,8 +29,7 @@ public class PriceListDto {
         dto.createdAt = priceList.getCreatedAt();
         return dto;
     }
-
-    public PriceList toEntity() {
+    public PriceList toEntity(){
         PriceList priceList = new PriceList();
         priceList.setId(this.id);
         priceList.setName(this.name);
