@@ -22,36 +22,6 @@ public class StudentDto {
     public StudentDto() {
     }
 
-    public static StudentDto from(Student student){
-        StudentDto dto = new StudentDto();
-        dto.id = student.getId();
-        dto.userId = student.getUser().getId();
-        dto.firstName = student.getFirstName();
-        dto.lastName = student.getLastName();
-        dto.patronymic = student.getPatronymic();
-        dto.birthdate = student.getBirthdate();
-        dto.parentName = student.getParentName();
-        dto.phone = student.getPhone();
-        dto.referralSource = student.getReferralSource();
-        dto.createdAt = student.getCreatedAt();
-        return dto;
-    }
-    public Student toEntity(User user){
-        Student student = new Student();
-        student.setId(this.id);
-        student.setUser(user);
-        student.setFirstName(this.firstName);
-        student.setLastName(this.lastName);
-        student.setPatronymic(this.patronymic);
-        student.setBirthdate(this.birthdate);
-        student.setParentName(this.parentName);
-        student.setPhone(this.phone);
-        student.setReferralSource(this.referralSource);
-        student.setCreatedAt(this.createdAt);
-        return student;
-    }
-
-
     public Long getId() {
         return id;
     }
