@@ -1,8 +1,5 @@
 package org.dance.dsappbackend.dto;
 
-import org.dance.dsappbackend.entity.Student;
-import org.dance.dsappbackend.entity.User;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

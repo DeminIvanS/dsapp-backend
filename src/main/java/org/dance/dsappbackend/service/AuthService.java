@@ -64,7 +64,6 @@ public class AuthService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
-
         return issueTokens(request.username());
     }
 
