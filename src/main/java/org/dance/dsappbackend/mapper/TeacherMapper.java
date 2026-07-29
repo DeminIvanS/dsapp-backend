@@ -27,15 +27,7 @@ public class TeacherMapper {
         dto.setPatronymic(teacher.getPatronymic());
         return dto;
     }
-    public User toUserEntity (CreateTeacherDto dto, String passwordHash) {
-        User user = new User();
-        user.setUsername(dto.username());
-        user.setPassword(passwordHash);
-        user.setRole(User.Role.ROLE_TEACHER);
-        user.setActive(true);
-        user.setMustChangePassword(true);
-        return user;
-    }
+
 
 
 

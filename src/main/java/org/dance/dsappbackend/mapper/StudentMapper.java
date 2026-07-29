@@ -37,15 +37,7 @@ public class StudentMapper {
         dto.setCreatedAt(student.getCreatedAt());
         return dto;
     }
-    public User toUserEntity (CreateStudentDto dto, String passwordHash) {
-        User user = new User();
-        user.setUsername(dto.username());
-        user.setPassword(passwordHash);
-        user.setRole(User.Role.ROLE_STUDENT);
-        user.setActive(true);
-        user.setMustChangePassword(true);
-        return user;
-    }
+
 
 
 }
