@@ -60,7 +60,7 @@ public class StudentService {
     public void update(Long id, StudentDto dto) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student with id=" + id + " not found"));
-        studentMapper.updateEntityFromDto(dto,student);
+        updateEntityFromDto(dto,student);
 
         studentRepository.save(student);
     }
@@ -68,5 +68,14 @@ public class StudentService {
     public void delete(Long id) {
         studentRepository.deleteById(id);
     }
+    public void updateEntityFromDto(StudentDto dto, Student student) {
+        student.setFirstName(dto.getFirstName());
+        student.setLastName(dto.getLastName());
+        student.setPatronymic(dto.getPatronymic());
+        student.setBirthdate(dto.getBirthdate());
+        student.setParentName(dto.getParentName());
+        student.setPhone(dto.getPhone());
+        student.setReferralSource(dto.getReferralSource());
 
+    }
 }

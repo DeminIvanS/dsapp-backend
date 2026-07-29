@@ -46,15 +46,6 @@ public class StudentMapper {
         user.setMustChangePassword(true);
         return user;
     }
-    public void updateEntityFromDto(StudentDto dto, Student student) {
-        student.setFirstName(dto.getFirstName());
-        student.setLastName(dto.getLastName());
-        student.setPatronymic(dto.getPatronymic());
-        student.setBirthdate(dto.getBirthdate());
-        student.setParentName(dto.getParentName());
-        student.setPhone(dto.getPhone());
-        student.setReferralSource(dto.getReferralSource());
 
-    }
 
 }

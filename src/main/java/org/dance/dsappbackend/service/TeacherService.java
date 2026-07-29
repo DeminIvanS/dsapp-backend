@@ -60,13 +60,20 @@ public class TeacherService {
     public void update(Long id, TeacherDto dto) {
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        teacherMapper.updateEntityFromDto(dto,teacher);
+        updateEntityFromDto(dto,teacher);
 
         teacherRepository.save(teacher);
     }
 
     public void delete(Long id) {
         teacherRepository.deleteById(id);
+    }
+
+    public void updateEntityFromDto(TeacherDto dto, Teacher teacher) {
+        teacher.setFirstName(dto.getFirstName());
+        teacher.setLastName(dto.getLastName());
+        teacher.setPatronymic(dto.getPatronymic());
+
     }
 
 }
