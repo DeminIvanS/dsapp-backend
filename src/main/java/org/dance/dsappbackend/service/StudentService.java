@@ -7,6 +7,7 @@ import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.dto.StudentDto;
 import org.dance.dsappbackend.entity.Student;
 import org.dance.dsappbackend.entity.User;
+import org.dance.dsappbackend.mapper.StudentMapper;
 import org.dance.dsappbackend.repository.StudentRepository;
 import org.dance.dsappbackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,17 +22,19 @@ public class StudentService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TemporaryPasswordGenerator passwordGenerator;
+    private final StudentMapper studentMapper;
 
-    public StudentService(StudentRepository studentRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, TemporaryPasswordGenerator passwordGenerator) {
+    public StudentService(StudentRepository studentRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, TemporaryPasswordGenerator passwordGenerator, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.passwordGenerator = passwordGenerator;
+        this.studentMapper = studentMapper;
     }
 
     public StudentDto findById(Long id) {
         return studentRepository.findById(id)
-                .map(StudentDto::from)
+                .map(studentMapper::toStudentDto)
                 .orElseThrow(() -> new EntityNotFoundException("Student with id=" + id + " not found."));
 
     }
@@ -39,7 +42,7 @@ public class StudentService {
     public List<StudentDto> findAll() {
         return studentRepository.findAll()
                 .stream()
-                .map(StudentDto::from)
+                .map(studentMapper::toStudentDto)
                 .toList();
     }
 
@@ -55,15 +58,24 @@ public class StudentService {
     }
 
     public void update(Long id, StudentDto dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        var entity = dto.toEntity(user);
-        entity.setId(id);
-        studentRepository.save(entity);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student with id=" + id + " not found"));
+        updateEntityFromDto(dto,student);
+
+        studentRepository.save(student);
     }
 
     public void delete(Long id) {
         studentRepository.deleteById(id);
     }
+    public void updateEntityFromDto(StudentDto dto, Student student) {
+        student.setFirstName(dto.getFirstName());
+        student.setLastName(dto.getLastName());
+        student.setPatronymic(dto.getPatronymic());
+        student.setBirthdate(dto.getBirthdate());
+        student.setParentName(dto.getParentName());
+        student.setPhone(dto.getPhone());
+        student.setReferralSource(dto.getReferralSource());
 
+    }
 }
