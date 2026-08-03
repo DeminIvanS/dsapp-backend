@@ -28,16 +28,7 @@ public class GroupDto {
         dto.createdAt = group.getCreatedAt();
         return dto;
     }
-    public Group toEntity(Branch branch, Teacher teacher){
-        Group group = new Group();
-        group.setId(this.id);
-        group.setBranch(branch);
-        group.setTeacher(teacher);
-        group.setName(this.name);
-        group.setAgeRange(this.ageRange);
-        group.setCreatedAt(this.createdAt);
-        return group;
-    }
+
 
     public Long getId() {
         return id;

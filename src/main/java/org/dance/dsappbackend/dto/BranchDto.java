@@ -12,22 +12,7 @@ public class BranchDto {
     public BranchDto() {
     }
 
-    public static BranchDto from(Branch branch){
-        BranchDto dto = new BranchDto();
-        dto.id = branch.getId();
-        dto.name = branch.getName();
-        dto.address = branch.getAddress();
-        dto.createdAt = branch.getCreatedAt();
-        return dto;
-    }
-    public Branch toEntity(){
-        Branch branch = new Branch();
-        branch.setId(this.id);
-        branch.setName(this.name);
-        branch.setAddress(this.address);
-        branch.setCreatedAt(this.createdAt);
-        return branch;
-    }
+
 
     public Long getId() {
         return id;
