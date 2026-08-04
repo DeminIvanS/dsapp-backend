@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.dance.dsappbackend.dto.AuthResponse;
 import org.dance.dsappbackend.dto.LoginRequest;
@@ -36,19 +37,27 @@ public class AuthController {
     }
     @Operation(
             summary = "Вход по логину и паролю",
-            description = "Возвращает пару access/refresh токенов"
+            description = "Возвращает пару access/refresh токенов",
+            security = @SecurityRequirement(name = "")
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Токены выданы"),
             @ApiResponse(responseCode = "401", description = "Неверный логин или пароль",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }
-
+    @Operation(
+            summary = "Обновление пары токенов",
+            description = "Принимает refresh-токен в JSON-теле запроса и выдает новую пару токенов без проверки заголовка авторизации.",
+            security = @SecurityRequirement(name = "")
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Новые токены успешно сгенерированы"),
+            @ApiResponse(responseCode = "401", description = "Невалидный или просроченный refresh-токен")
+    })
     @PostMapping("/refresh")
 
     public AuthResponse refresh(@RequestBody RefreshRequest request) {
