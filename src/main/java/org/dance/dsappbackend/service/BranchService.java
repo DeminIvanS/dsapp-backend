@@ -2,6 +2,9 @@ package org.dance.dsappbackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.dance.dsappbackend.dto.BranchDto;
+import org.dance.dsappbackend.dto.CreateBranchDto;
+import org.dance.dsappbackend.entity.Branch;
+import org.dance.dsappbackend.mapper.BranchMapper;
 import org.dance.dsappbackend.repository.BranchRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -10,14 +13,16 @@ import java.util.List;
 public class BranchService {
 
     private final BranchRepository branchRepository;
+    private final BranchMapper branchMapper;
 
 
-    public BranchService(BranchRepository branchRepository) {
+    public BranchService(BranchRepository branchRepository, BranchMapper branchMapper) {
         this.branchRepository = branchRepository;
+        this.branchMapper = branchMapper;
     }
     public BranchDto findById(Long id){
         return branchRepository.findById(id)
-                .map(BranchDto::from)
+                .map(branchMapper::toBranchDto)
                 .orElseThrow(()->new EntityNotFoundException("Branch with id=" +id+" not found."));
 
     }
@@ -25,17 +30,19 @@ public class BranchService {
     public List<BranchDto> findAll(){
         return branchRepository.findAll()
                 .stream()
-                .map(BranchDto::from)
+                .map(branchMapper::toBranchDto)
                 .toList();
     }
 
-    public BranchDto create(BranchDto dto){
-        var entity = dto.toEntity();
-        return BranchDto.from(branchRepository.save(entity));
+    public BranchDto create(CreateBranchDto dto){
+        var entity = branchMapper.toBranchEntity(dto);
+        Branch savedEntity = branchRepository.save(entity);
+        return branchMapper.toBranchDto(savedEntity);
     }
 
-    public void update(Long id, BranchDto dto){
-        var entity = dto.toEntity();
+    public void update(Long id, CreateBranchDto dto){
+        var entity = branchMapper.toBranchEntity(dto);
+
         entity.setId(id);
         branchRepository.save(entity);
     }

@@ -3,6 +3,7 @@ package org.dance.dsappbackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.dance.dsappbackend.dto.CreateGroupDto;
 import org.dance.dsappbackend.dto.GroupDto;
 import org.dance.dsappbackend.service.GroupService;
 import org.springframework.web.bind.annotation.*;
@@ -35,13 +36,13 @@ public class GroupsController {
 
     @PostMapping
     @Operation(summary = "Создать новую группу", description = "создает новую группу, доступно только для ROLE_ADMIN")
-    public GroupDto create(@RequestBody GroupDto dto) {
+    public GroupDto create(@RequestBody CreateGroupDto dto) {
         return groupService.create(dto);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Изменить группу по id", description = "изменяет данные группы, доступно только для ROLE_ADMIN")
-    public void update(@PathVariable Long id, @RequestBody GroupDto dto) {
+    public void update(@PathVariable Long id, @RequestBody CreateGroupDto dto) {
        groupService.update(id,dto);
     }
 

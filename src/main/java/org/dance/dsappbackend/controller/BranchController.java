@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.dance.dsappbackend.dto.BranchDto;
+import org.dance.dsappbackend.dto.CreateBranchDto;
 import org.dance.dsappbackend.service.BranchService;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,13 +35,13 @@ public class BranchController {
 
     @PostMapping
     @Operation(summary = "Создать новый филиал", description = "создает новый филиал, доступно только для ROLE_ADMIN")
-    public BranchDto create(@RequestBody BranchDto dto) {
+    public BranchDto create(@RequestBody CreateBranchDto dto) {
         return branchService.create(dto);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Изменить филиалу по id", description = "изменяет данные по филиалу, доступно только для ROLE_ADMIN")
-    public void update(@PathVariable Long id, @RequestBody BranchDto dto) {
+    public void update(@PathVariable Long id, @RequestBody CreateBranchDto dto) {
        branchService.update(id,dto);
     }
 

@@ -18,27 +18,6 @@ public class GroupDto {
     public GroupDto() {
     }
 
-    public static GroupDto from(Group group){
-        GroupDto dto = new GroupDto();
-        dto.id = group.getId();
-        dto.branchId = group.getBranch().getId();
-        dto.teacherId = group.getTeacher().getId();
-        dto.name = group.getName();
-        dto.ageRange = group.getAgeRange();
-        dto.createdAt = group.getCreatedAt();
-        return dto;
-    }
-    public Group toEntity(Branch branch, Teacher teacher){
-        Group group = new Group();
-        group.setId(this.id);
-        group.setBranch(branch);
-        group.setTeacher(teacher);
-        group.setName(this.name);
-        group.setAgeRange(this.ageRange);
-        group.setCreatedAt(this.createdAt);
-        return group;
-    }
-
     public Long getId() {
         return id;
     }
