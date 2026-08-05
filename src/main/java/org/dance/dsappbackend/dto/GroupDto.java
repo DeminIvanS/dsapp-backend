@@ -18,18 +18,6 @@ public class GroupDto {
     public GroupDto() {
     }
 
-    public static GroupDto from(Group group){
-        GroupDto dto = new GroupDto();
-        dto.id = group.getId();
-        dto.branchId = group.getBranch().getId();
-        dto.teacherId = group.getTeacher().getId();
-        dto.name = group.getName();
-        dto.ageRange = group.getAgeRange();
-        dto.createdAt = group.getCreatedAt();
-        return dto;
-    }
-
-
     public Long getId() {
         return id;
     }
