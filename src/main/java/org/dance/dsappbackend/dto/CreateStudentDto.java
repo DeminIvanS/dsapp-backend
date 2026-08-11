@@ -1,7 +1,6 @@
 package org.dance.dsappbackend.dto;
 
 import org.dance.dsappbackend.entity.Student;
-import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.entity.User;
 
 import java.time.LocalDate;
@@ -22,7 +21,7 @@ public record CreateStudentDto(
         user.setPassword(password);
         user.setRole(User.Role.ROLE_STUDENT);
         user.setActive(true);
-        user.setMustChangePassword(true);
+        user.setShouldChangePassword(true);
         return user;
     }
     public Student toStudentEntity(User user){

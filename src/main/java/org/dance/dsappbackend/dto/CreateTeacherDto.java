@@ -17,7 +17,7 @@ public record CreateTeacherDto(
         user.setPassword(password);
         user.setRole(User.Role.ROLE_TEACHER);
         user.setActive(true);
-        user.setMustChangePassword(true);
+        user.setShouldChangePassword(true);
         return user;
     }
 

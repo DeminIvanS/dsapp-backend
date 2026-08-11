@@ -1,7 +1,6 @@
 package org.dance.dsappbackend.entity;
 
 import jakarta.persistence.*;
-import org.dance.dsappbackend.dto.RegisterRequest;
 
 
 @Entity
@@ -16,8 +15,8 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String password;
 
-    @Column(name = "must_change_password", nullable = false)
-    private boolean mustChangePassword;
+    @Column(name = "should_change_password", nullable = false)
+    private boolean shouldChangePassword;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
@@ -73,11 +72,11 @@ public class User {
         isActive = active;
     }
 
-    public boolean isMustChangePassword() {
-        return mustChangePassword;
+    public void setShouldChangePassword(boolean shouldChangePassword) {
+        this.shouldChangePassword = shouldChangePassword;
     }
 
-    public void setMustChangePassword(boolean mustChangePassword) {
-        this.mustChangePassword = mustChangePassword;
+    public boolean shouldChangePassword() {
+        return shouldChangePassword;
     }
 }

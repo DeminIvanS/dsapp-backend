@@ -14,7 +14,7 @@ public class UserMapper {
         user.setPassword(passwordHash);
         user.setRole(role);
         user.setActive(true);
-        user.setMustChangePassword(true);
+        user.setShouldChangePassword(true);
         return user;
     }
 }
