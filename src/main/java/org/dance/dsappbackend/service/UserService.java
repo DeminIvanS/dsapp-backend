@@ -3,8 +3,9 @@ package org.dance.dsappbackend.service;
 import org.dance.dsappbackend.dto.CreateStudentDto;
 import org.dance.dsappbackend.dto.CreateTeacherDto;
 import org.dance.dsappbackend.dto.CreatedUserDto;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class UserService {
 
     private final StudentService studentService;

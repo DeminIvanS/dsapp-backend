@@ -7,6 +7,7 @@ import org.dance.dsappbackend.dto.CreateStudentDto;
 import org.dance.dsappbackend.dto.CreateTeacherDto;
 import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +26,14 @@ public class UserController {
     }
 
     @PostMapping("/students")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Создать ученика", description = "создает ученика, доступно только для ROLE_ADMIN")
     public CreatedUserDto createStudents(@RequestBody CreateStudentDto dto) {
         return userService.createStudent(dto);
     }
 
     @PostMapping("/teachers")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Создать преподавателя", description = "создает преподавателя, доступно только для ROLE_ADMIN")
     public CreatedUserDto createTeachers(@RequestBody CreateTeacherDto dto) {
         return userService.createTeacher(dto);
