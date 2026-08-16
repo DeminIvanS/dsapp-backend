@@ -34,12 +34,6 @@ public class TeacherController {
         return teacherService.findAll();
     }
 
-    @PostMapping
-    @Operation(summary = "Создать преподавателя", description = "создает преподавателя, доступно только для ROLE_ADMIN")
-    public CreatedUserDto create(@RequestBody CreateTeacherDto dto) {
-        return teacherService.createTeacher(dto);
-    }
-
     @PutMapping("/{id}")
     @Operation(summary = "Изменить преподавателя по id", description = "изменяет преподавателя по id, доступно для ROLE_ADMIN и ROLE_TEACHER")
     public void update(@PathVariable Long id, @RequestBody TeacherDto dto) {

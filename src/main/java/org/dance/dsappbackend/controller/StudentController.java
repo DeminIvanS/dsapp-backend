@@ -35,12 +35,6 @@ public class StudentController {
         return studentService.findAll();
     }
 
-    @PostMapping
-    @Operation(summary = "Создать ученика", description = "создает ученика, доступно только для ROLE_ADMIN")
-    public CreatedUserDto create(@RequestBody CreateStudentDto dto) {
-        return studentService.createStudent(dto);
-    }
-
     @PutMapping("/{id}")
     @Operation(summary = "Изменить ученика по id", description = "изменяет ученика по id, доступно для ROLE_ADMIN и ROLE_STUDENT")
     public void update(@PathVariable Long id, @RequestBody StudentDto dto) {
