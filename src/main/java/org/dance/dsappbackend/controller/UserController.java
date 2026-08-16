@@ -6,12 +6,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.dance.dsappbackend.dto.CreateStudentDto;
 import org.dance.dsappbackend.dto.CreateTeacherDto;
 import org.dance.dsappbackend.dto.CreatedUserDto;
+import org.dance.dsappbackend.dto.StudentDto;
 import org.dance.dsappbackend.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Пользователи", description = "Управление пользователями школы")
 @SecurityRequirement(name = "bearerAuth")
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -37,5 +36,12 @@ public class UserController {
     @Operation(summary = "Создать преподавателя", description = "создает преподавателя, доступно только для ROLE_ADMIN")
     public CreatedUserDto createTeachers(@RequestBody CreateTeacherDto dto) {
         return userService.createTeacher(dto);
+    }
+
+    @PostMapping("/{id}/reset-password")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Сбросить пароль юзера", description = "сбрасывает пароль, доступно только для ROLE_ADMIN")
+    public CreatedUserDto resetPassword(@PathVariable Long id) {
+        return userService.resetPassword(id);
     }
 }
