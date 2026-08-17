@@ -3,10 +3,7 @@ package org.dance.dsappbackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.dance.dsappbackend.dto.CreateStudentDto;
-import org.dance.dsappbackend.dto.CreateTeacherDto;
-import org.dance.dsappbackend.dto.CreatedUserDto;
-import org.dance.dsappbackend.dto.StudentDto;
+import org.dance.dsappbackend.dto.*;
 import org.dance.dsappbackend.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +38,7 @@ public class UserController {
     @PostMapping("/{id}/reset-password")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Сбросить пароль юзера", description = "сбрасывает пароль, доступно только для ROLE_ADMIN")
-    public CreatedUserDto resetPassword(@PathVariable Long id) {
+    public ResetPasswordResponse resetPassword(@PathVariable Long id) {
         return userService.resetPassword(id);
     }
 }
