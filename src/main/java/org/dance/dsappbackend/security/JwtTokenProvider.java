@@ -57,20 +57,32 @@ public class JwtTokenProvider {
     }
 
     public String generateAccessToken(String username) {
-        return buildToken(username, TYPE_ACCESS, accessTokenExpiration);
+        return buildAccessToken(username);
     }
 
     public String generateRefreshToken(String username) {
-        return buildToken(username, TYPE_REFRESH, refreshTokenExpiration);
+        return buildRefreshToken(username);
     }
 
-    private String buildToken(String username, String type, long expirationMs) {
+    private String buildAccessToken(String username) {
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + expirationMs);
+        Date expiry = new Date(now.getTime() + accessTokenExpiration);
 
         return Jwts.builder()
                 .subject(username)
-                .claim(CLAIM_TYPE, type)
+                .claim(CLAIM_TYPE, TYPE_ACCESS)
+                .issuedAt(now)
+                .expiration(expiry)
+                .signWith(secretKey)
+                .compact();
+    }
+    private String buildRefreshToken(String username) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + refreshTokenExpiration);
+
+        return Jwts.builder()
+                .subject(username)
+                .claim(CLAIM_TYPE, TYPE_REFRESH)
                 .issuedAt(now)
                 .expiration(expiry)
                 .signWith(secretKey)
