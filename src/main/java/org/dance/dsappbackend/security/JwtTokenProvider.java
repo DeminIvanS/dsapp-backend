@@ -35,6 +35,7 @@ public class JwtTokenProvider {
     private static final String CLAIM_TYPE = "type";
     private static final String TYPE_ACCESS = "access";
     private static final String TYPE_REFRESH = "refresh";
+    private static final String CLAIM_SHOULD_CHANGE_PASSWORD = "shouldChangePassword";
 
     private final SecretKey secretKey;
     private final long accessTokenExpiration;
@@ -56,21 +57,22 @@ public class JwtTokenProvider {
         this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
-    public String generateAccessToken(String username) {
-        return buildAccessToken(username);
+    public String generateAccessToken(String username, boolean shouldChangePassword) {
+        return buildAccessToken(username, shouldChangePassword);
     }
 
     public String generateRefreshToken(String username) {
         return buildRefreshToken(username);
     }
 
-    private String buildAccessToken(String username) {
+    private String buildAccessToken(String username, boolean shouldChangePassword) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + accessTokenExpiration);
 
         return Jwts.builder()
                 .subject(username)
                 .claim(CLAIM_TYPE, TYPE_ACCESS)
+                .claim(CLAIM_SHOULD_CHANGE_PASSWORD, shouldChangePassword)
                 .issuedAt(now)
                 .expiration(expiry)
                 .signWith(secretKey)
