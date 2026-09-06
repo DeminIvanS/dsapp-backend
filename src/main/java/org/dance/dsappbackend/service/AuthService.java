@@ -1,6 +1,7 @@
 package org.dance.dsappbackend.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.dance.dsappbackend.dto.AuthResponse;
 import org.dance.dsappbackend.dto.LoginRequest;
 import org.dance.dsappbackend.dto.RegisterRequest;
@@ -68,7 +69,7 @@ public class AuthService {
     }
 
     /**
-     * Выдаёт новый access-токен по валидному refresh-токену.
+     * Выдаёт новый access-токен по-валидному refresh-токену.
      *
      * <p>Важно: refresh-токен нигде не хранится на сервере — проверка
      * происходит только по подписи (stateless refresh).
@@ -86,7 +87,11 @@ public class AuthService {
     }
 
     private AuthResponse issueTokens(String username) {
-        String accessToken = jwtTokenProvider.generateAccessToken(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new EntityNotFoundException("User with username= " + username + " noy found" ));
+
+
+        String accessToken = jwtTokenProvider.generateAccessToken(username, user.shouldChangePassword());
         String refreshToken = jwtTokenProvider.generateRefreshToken(username);
         return new AuthResponse(accessToken, refreshToken);
     }
