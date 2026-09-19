@@ -4,13 +4,11 @@ package org.dance.dsappbackend;
 
 import org.dance.dsappbackend.dto.CreateTeacherDto;
 import org.dance.dsappbackend.dto.TeacherDto;
-import org.dance.dsappbackend.entity.Student;
 import org.dance.dsappbackend.entity.Teacher;
 import org.dance.dsappbackend.entity.User;
 import org.dance.dsappbackend.mapper.TeacherMapper;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
