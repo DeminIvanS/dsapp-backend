@@ -97,7 +97,7 @@ public class SecurityConfig {
      * BCrypt — рекомендованный алгоритм хэширования паролей.
      * Коэффициент сложности по умолчанию — 10.
      */
-    @Bean
+    @Bean(name= "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
