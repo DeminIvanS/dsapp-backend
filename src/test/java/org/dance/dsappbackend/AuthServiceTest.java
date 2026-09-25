@@ -44,17 +44,24 @@ public class AuthServiceTest {
     void createUserTest(){
 
         RegisterRequest request = new RegisterRequest("vova","KID-123456", User.Role.ROLE_STUDENT);
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("vova");
 
-        when(userRepository.existsByUsername("vova")).thenReturn(false);
-        when(passwordEncoder.encode("KID-123456")).thenReturn("hashed_password");
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.existsByUsername(any())).thenReturn(false);
+        when(passwordEncoder.encode(any())).thenReturn("hashed_password");
+        when(userRepository.save(any())).thenReturn(user);
 
         String result = authService.createUser(request);
 
         assertNotNull(result);
         assertTrue(result.contains("vova"));
         assertTrue(result.contains("ROLE_STUDENT"));
-        verify(userRepository, times(1)).save(any(User.class));
+
+        verify(passwordEncoder, times(1)).encode("KID-123456");
+        verify(userRepository, times(1)).existsByUsername("vova");
+        verify(userRepository, times(1)).save(user);
+        verifyNoMoreInteractions(userRepository, passwordEncoder);
 
     }
 
