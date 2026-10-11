@@ -25,6 +25,7 @@ public class TeacherMapper {
         dto.setFirstName(teacher.getFirstName());
         dto.setLastName(teacher.getLastName());
         dto.setPatronymic(teacher.getPatronymic());
+        dto.setCreatedAt(teacher.getCreatedAt());
         return dto;
     }
 
