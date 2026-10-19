@@ -1,9 +1,7 @@
 package org.dance.dsappbackend.advice;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,16 +22,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(
-            Exception ex, Object body, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-        if (body != null) {
-            return new ResponseEntity<>(body, headers, status);
-        }
-        ErrorResponse response = new ErrorResponse("Server error.");
-        return new ResponseEntity<>(response, headers, status);
-    }
 
     private ResponseEntity<ErrorResponse> buildResponse(HttpStatus status, String message) {
         ErrorResponse response = new ErrorResponse(message);
