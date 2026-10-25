@@ -24,7 +24,7 @@ public class PriceListItemController {
 
     @GetMapping
     public List<PriceListItemDto> getAll(@RequestParam(defaultValue = "true")Boolean isActive) {
-        return priceListItemService.findAll(isActive);
+        return priceListItemService.findByIsActive(isActive);
     }
 
     @PostMapping
