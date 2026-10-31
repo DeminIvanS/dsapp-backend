@@ -35,8 +35,7 @@ CREATE TABLE if not exists price_list_items (
                                   id BIGSERIAL PRIMARY KEY,
                                   name VARCHAR(255) NOT NULL,
                                   price NUMERIC(10, 2) NOT NULL,
-                                  valid_from DATE NOT NULL,
-                                  valid_to DATE,
+                                  is_active BOOLEAN NOT NULL DEFAULT TRUE,
                                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -164,3 +163,6 @@ CREATE TABLE if not exists payment_charges (
                                  CONSTRAINT fk_pc_payment FOREIGN KEY (payment_id) REFERENCES payments(id) ON DELETE CASCADE,
                                  CONSTRAINT fk_pc_charge FOREIGN KEY (charge_id) REFERENCES charges(id) ON DELETE RESTRICT
 );
+CREATE UNIQUE INDEX ux_price_list_items_active_name
+    ON price_list_items (name)
+    WHERE is_active = TRUE;
