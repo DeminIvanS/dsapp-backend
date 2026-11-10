@@ -1,7 +1,7 @@
 package org.dance.dsappbackend.controller;
 
-import org.dance.dsappbackend.dto.PriceListDto;
-import org.dance.dsappbackend.service.PriceListService;
+import org.dance.dsappbackend.dto.PriceListItemDto;
+import org.dance.dsappbackend.service.PriceListItemService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,35 +10,36 @@ import java.util.List;
 @RequestMapping("/api/price_list_items")
 public class PriceListItemController {
 
-    private final PriceListService priceListService;
+    private final PriceListItemService priceListItemService;
 
-    public PriceListItemController(PriceListService priceListService) {
+    public PriceListItemController(PriceListItemService priceListItemService) {
 
-        this.priceListService = priceListService;
+        this.priceListItemService = priceListItemService;
     }
 
     @GetMapping("/{id}")
-    public PriceListDto getById(@PathVariable Long id) {
-        return priceListService.findById(id);
+    public PriceListItemDto getById(@PathVariable Long id) {
+        return priceListItemService.findById(id);
     }
 
     @GetMapping
-    public List<PriceListDto> getAll() {
-        return priceListService.findAll();
+    public List<PriceListItemDto> getAll(@RequestParam(defaultValue = "true")Boolean isActive) {
+        return priceListItemService.findByIsActive(isActive);
     }
 
     @PostMapping
-    public PriceListDto create(@RequestBody PriceListDto dto) {
-        return priceListService.create(dto);
+    public PriceListItemDto create(@RequestBody PriceListItemDto dto) {
+        return priceListItemService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody PriceListDto dto) {
-       priceListService.update(id,dto);
+    public void update(@PathVariable Long id, @RequestBody PriceListItemDto dto) {
+       priceListItemService.update(id,dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        priceListService.delete(id);
+
+        priceListItemService.delete(id);
     }
 }
