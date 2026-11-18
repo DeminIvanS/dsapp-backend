@@ -5,21 +5,30 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "price_list_items")
-public class PriceListItem {
+@Table(name = "subscription_plans")
+public class SubscriptionPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 255)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
-    @Column(name = "is_active")
-    private boolean isActive;
-    @Column(name = "created_at")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "billing_mode", nullable = false, length = 10)
+    private BillingMode billingMode;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-    public PriceListItem() {
+    public enum BillingMode {
+        AUTO,
+        MANUAL
+    }
+    public SubscriptionPlan() {
     }
 
     public Long getId() {
@@ -45,8 +54,22 @@ public class PriceListItem {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public boolean isActive() { return isActive; }
-    public void setActive(boolean active) { isActive = active; }
+
+    public BillingMode getBillingMode() {
+        return billingMode;
+    }
+
+    public void setBillingMode(BillingMode billingMode) {
+        this.billingMode = billingMode;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
