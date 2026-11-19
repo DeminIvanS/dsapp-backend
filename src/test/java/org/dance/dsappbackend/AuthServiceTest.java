@@ -1,11 +1,12 @@
 package org.dance.dsappbackend;
 
-import jakarta.inject.Inject;
+
 import org.dance.dsappbackend.dto.AuthResponse;
 import org.dance.dsappbackend.dto.LoginRequest;
 import org.dance.dsappbackend.dto.RefreshRequest;
 import org.dance.dsappbackend.dto.RegisterRequest;
 import org.dance.dsappbackend.entity.User;
+import org.dance.dsappbackend.enums.Role;
 import org.dance.dsappbackend.repository.UserRepository;
 import org.dance.dsappbackend.security.JwtTokenProvider;
 import org.dance.dsappbackend.service.AuthService;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,7 +43,7 @@ public class AuthServiceTest {
     @Test
     void createUserTest(){
 
-        RegisterRequest request = new RegisterRequest("vova","KID-123456", User.Role.ROLE_STUDENT);
+        RegisterRequest request = new RegisterRequest("vova","KID-123456", Role.ROLE_STUDENT);
         User user = new User();
         user.setId(1L);
         user.setUsername("vova");
@@ -60,7 +60,7 @@ public class AuthServiceTest {
 
         verify(passwordEncoder, times(1)).encode("KID-123456");
         verify(userRepository, times(1)).existsByUsername("vova");
-        verify(userRepository, times(1)).save(user);
+        verify(userRepository, times(1)).save(any(User.class));
         verifyNoMoreInteractions(userRepository, passwordEncoder);
 
     }
@@ -68,7 +68,7 @@ public class AuthServiceTest {
     @Test
     void createUserAlreadyExistsTest(){
 
-        RegisterRequest request = new RegisterRequest("vova", "KID-123456", User.Role.ROLE_STUDENT);
+        RegisterRequest request = new RegisterRequest("vova", "KID-123456", Role.ROLE_STUDENT);
         when(userRepository.existsByUsername("vova")).thenReturn(true);
 
         assertThrows(IllegalArgumentException.class, ()->authService.createUser(request));

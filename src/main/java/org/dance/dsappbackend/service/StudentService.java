@@ -50,9 +50,9 @@ public class StudentService {
     public CreatedUserDto createStudent(CreateStudentDto dto) {
         String tempPassword = passwordGenerator.generatePassword();
         String passwordHash = passwordEncoder.encode(tempPassword);
-        User user = dto.toUserEntity(passwordHash);
+        User user = studentMapper.toUserEntity(dto, passwordHash);
         User savedUser = userRepository.save(user);
-        Student student = dto.toStudentEntity(savedUser);
+        Student student = studentMapper.toStudentEntity(dto, savedUser);
         Student savedStudent = studentRepository.save(student);
         return new CreatedUserDto(savedUser.getUsername(), tempPassword);
     }

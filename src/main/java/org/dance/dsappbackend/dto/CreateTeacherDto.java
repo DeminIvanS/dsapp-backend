@@ -9,24 +9,4 @@ public record CreateTeacherDto(
         String lastName,
         String patronymic
 )
-{
-
-    public User toUserEntity(String password){
-        User user = new User();
-        user.setUsername(this.username);
-        user.setPassword(password);
-        user.setRole(User.Role.ROLE_TEACHER);
-        user.setActive(true);
-        user.setShouldChangePassword(true);
-        return user;
-    }
-
-    public Teacher toTeacherEntity(User user){
-        Teacher teacher = new Teacher();
-        teacher.setUser(user);
-        teacher.setFirstName(this.firstName);
-        teacher.setLastName(this.lastName);
-        teacher.setPatronymic(this.patronymic);
-        return teacher;
-    }
-}
+{}

@@ -1,13 +1,12 @@
 package org.dance.dsappbackend.dto;
 
 
-import org.dance.dsappbackend.entity.User;
+import org.dance.dsappbackend.enums.Role;
 
 public record RegisterRequest(
 
         String username,
         String password,
-        User.Role role
-
+        Role role
 ) {
 }

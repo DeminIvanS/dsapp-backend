@@ -3,28 +3,30 @@ package org.dance.dsappbackend.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.dance.dsappbackend.dto.SubscriptionPlanDto;
 import org.dance.dsappbackend.entity.SubscriptionPlan;
+import org.dance.dsappbackend.mapper.SubscriptionPlanMapper;
 import org.dance.dsappbackend.repository.SubscriptionPlanRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class SubscriptionPlanService {
 
     private final SubscriptionPlanRepository planRepository;
+    private final SubscriptionPlanMapper planMapper;
 
 
-    public SubscriptionPlanService(SubscriptionPlanRepository planRepository) {
+    public SubscriptionPlanService(SubscriptionPlanRepository planRepository,SubscriptionPlanMapper planMapper) {
         this.planRepository = planRepository;
+        this.planMapper = planMapper;
     }
 
 
     public SubscriptionPlanDto findById(Long id) {
         return planRepository.findById(id)
-                .map(SubscriptionPlanDto::from)
+                .map(planMapper::toSubscriptionPlanDto)
                 .orElseThrow(() -> new EntityNotFoundException("Subscription plan with id=" + id + " not found."));
 
     }
@@ -32,14 +34,15 @@ public class SubscriptionPlanService {
     public List<SubscriptionPlanDto> findByIsActive(boolean isActive) {
         return planRepository.findByIsActive(isActive)
                 .stream()
-                .map(SubscriptionPlanDto::from)
+                .map(planMapper::toSubscriptionPlanDto)
                 .toList();
     }
     @Transactional
-    public SubscriptionPlanDto create(SubscriptionPlanDto dto) {
+    public SubscriptionPlanDto createSubscriptionPlan(SubscriptionPlanDto dto) {
         validateDto(dto);
-        var entity = dto.toEntity();
-        return SubscriptionPlanDto.from(planRepository.save(entity));
+        SubscriptionPlan entity = planMapper.toSubscriptionPlanEntity(dto);
+        SubscriptionPlan saved = planRepository.save(entity);
+        return planMapper.toSubscriptionPlanDto(saved);
     }
 
     @Transactional
@@ -55,7 +58,7 @@ public class SubscriptionPlanService {
 
         planRepository.save(entity);
     }
-
+    @Transactional
     public void delete(Long id) {
         var entity = planRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Subscription plan with id=" + id + " not found."));

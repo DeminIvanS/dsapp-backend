@@ -1,6 +1,8 @@
 package org.dance.dsappbackend.entity;
 
 import jakarta.persistence.*;
+import org.dance.dsappbackend.enums.BillingMode;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -24,10 +26,7 @@ public class SubscriptionPlan {
     @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-    public enum BillingMode {
-        AUTO,
-        MANUAL
-    }
+
     public SubscriptionPlan() {
     }
 

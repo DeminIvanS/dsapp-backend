@@ -36,7 +36,7 @@ public class SubscriptionPlanController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Создать новый тариф")
     public SubscriptionPlanDto create(@RequestBody SubscriptionPlanDto dto) {
-        return planService.create(dto);
+        return planService.createSubscriptionPlan(dto);
     }
 
     @PutMapping("/{id}")
