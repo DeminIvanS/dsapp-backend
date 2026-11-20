@@ -7,23 +7,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscriptionPlanMapper {
     public SubscriptionPlanDto toSubscriptionPlanDto(SubscriptionPlan plan){
-        SubscriptionPlanDto dto = new SubscriptionPlanDto();
-        dto.setId(plan.getId());
-        dto.setName(plan.getName());
-        dto.setPrice(plan.getPrice());
-        dto.setBillingMode(plan.getBillingMode());
-        dto.setActive(plan.isActive());
-        dto.setCreatedAt(plan.getCreatedAt());
-        return dto;
+        return new SubscriptionPlanDto(
+                plan.getId(),
+                plan.getName(),
+                plan.getPrice(),
+                plan.getBillingMode(),
+                plan.isActive(),
+                plan.getCreatedAt());
     }
 
     public SubscriptionPlan toSubscriptionPlanEntity(SubscriptionPlanDto dto){
         SubscriptionPlan plan = new SubscriptionPlan();
-        plan.setName(dto.getName());
-        plan.setPrice(dto.getPrice());
-        plan.setBillingMode(dto.getBillingMode());
+        plan.setName(dto.name());
+        plan.setPrice(dto.price());
+        plan.setBillingMode(dto.billingMode());
         plan.setActive(dto.isActive());
-
         return plan;
     }
 }

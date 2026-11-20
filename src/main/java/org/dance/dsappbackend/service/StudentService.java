@@ -69,13 +69,13 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
     public void updateEntityFromDto(StudentDto dto, Student student) {
-        student.setFirstName(dto.getFirstName());
-        student.setLastName(dto.getLastName());
-        student.setPatronymic(dto.getPatronymic());
-        student.setBirthdate(dto.getBirthdate());
-        student.setParentName(dto.getParentName());
-        student.setPhone(dto.getPhone());
-        student.setReferralSource(dto.getReferralSource());
+        student.setFirstName(dto.firstName());
+        student.setLastName(dto.lastName());
+        student.setPatronymic(dto.patronymic());
+        student.setBirthdate(dto.birthdate());
+        student.setParentName(dto.parentName());
+        student.setPhone(dto.phone());
+        student.setReferralSource(dto.referralSource());
 
     }
 }

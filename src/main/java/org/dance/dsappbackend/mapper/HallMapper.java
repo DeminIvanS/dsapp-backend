@@ -17,13 +17,12 @@ public class HallMapper {
     }
 
     public HallDto toHallDto(Hall hall) {
-        HallDto dto = new HallDto();
-        dto.setId(hall.getId());
-        dto.setName(hall.getName());
-        dto.setDescription(hall.getDescription());
-        dto.setCreatedAt(hall.getCreatedAt());
-        dto.setBranchId(hall.getBranch().getId());
-        return dto;
+        return new HallDto(
+                hall.getId(),
+                hall.getBranch().getId(),
+                hall.getName(),
+                hall.getDescription(),
+                hall.getCreatedAt());
     }
 }
 

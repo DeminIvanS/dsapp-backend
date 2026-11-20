@@ -36,7 +36,7 @@ public class BranchController {
     @PostMapping
     @Operation(summary = "Создать новый филиал", description = "создает новый филиал, доступно только для ROLE_ADMIN")
     public BranchDto create(@RequestBody CreateBranchDto dto) {
-        return branchService.create(dto);
+        return branchService.createBranch(dto);
     }
 
     @PutMapping("/{id}")

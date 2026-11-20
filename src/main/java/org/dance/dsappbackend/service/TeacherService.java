@@ -70,9 +70,9 @@ public class TeacherService {
     }
 
     public void updateEntityFromDto(TeacherDto dto, Teacher teacher) {
-        teacher.setFirstName(dto.getFirstName());
-        teacher.setLastName(dto.getLastName());
-        teacher.setPatronymic(dto.getPatronymic());
+        teacher.setFirstName(dto.firstName());
+        teacher.setLastName(dto.lastName());
+        teacher.setPatronymic(dto.patronymic());
 
     }
 

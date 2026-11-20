@@ -51,9 +51,9 @@ public class SubscriptionPlanService {
         SubscriptionPlan entity = planRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Subscription plan with id=" + id + " not found."));
 
-        entity.setName(dto.getName());
-        entity.setPrice(dto.getPrice());
-        entity.setBillingMode(dto.getBillingMode());
+        entity.setName(dto.name());
+        entity.setPrice(dto.price());
+        entity.setBillingMode(dto.billingMode());
         entity.setActive(dto.isActive());
 
         planRepository.save(entity);
@@ -66,13 +66,13 @@ public class SubscriptionPlanService {
         planRepository.save(entity);
     }
     private void validateDto(SubscriptionPlanDto dto) {
-        if (!StringUtils.hasText(dto.getName())) {
+        if (!StringUtils.hasText(dto.name())) {
             throw new IllegalArgumentException("The subscription name cannot be empty");
         }
-        if (dto.getPrice() == null || dto.getPrice().signum() != 1) {
+        if (dto.price() == null || dto.price().signum() != 1) {
             throw new IllegalArgumentException("The price of a subscription must be greater than zero.");
         }
-        if (dto.getBillingMode() == null) {
+        if (dto.billingMode() == null) {
             throw new IllegalArgumentException("The accrual mode (AUTO or MANUAL) is mandatory.");
         }
     }

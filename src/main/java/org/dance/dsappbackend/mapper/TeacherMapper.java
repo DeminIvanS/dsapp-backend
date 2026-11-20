@@ -19,14 +19,13 @@ public class TeacherMapper {
         return teacher;
     }
     public TeacherDto toTeacherDto (Teacher teacher){
-        TeacherDto dto = new TeacherDto();
-        dto.setId(teacher.getId());
-        dto.setUserId(teacher.getUser().getId());
-        dto.setFirstName(teacher.getFirstName());
-        dto.setLastName(teacher.getLastName());
-        dto.setPatronymic(teacher.getPatronymic());
-        dto.setCreatedAt(teacher.getCreatedAt());
-        return dto;
+        return new TeacherDto(
+                teacher.getId(),
+                teacher.getUser().getId(),
+                teacher.getFirstName(),
+                teacher.getLastName(),
+                teacher.getPatronymic(),
+                teacher.getCreatedAt());
     }
     public User toUserEntity(CreateTeacherDto dto, String password){
         User user = new User();

@@ -24,18 +24,18 @@ public class StudentMapper {
         return student;
     }
     public StudentDto toStudentDto (Student student){
-        StudentDto dto = new StudentDto();
-        dto.setId(student.getId());
-        dto.setUserId(student.getUser().getId());
-        dto.setFirstName(student.getFirstName());
-        dto.setLastName(student.getLastName());
-        dto.setPatronymic(student.getPatronymic());
-        dto.setBirthdate(student.getBirthdate());
-        dto.setParentName(student.getParentName());
-        dto.setPhone(student.getPhone());
-        dto.setReferralSource(student.getReferralSource());
-        dto.setCreatedAt(student.getCreatedAt());
-        return dto;
+               return new StudentDto(
+                student.getId(),
+                student.getUser().getId(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getPatronymic(),
+                student.getBirthdate(),
+                student.getParentName(),
+                student.getPhone(),
+                student.getReferralSource(),
+                student.getCreatedAt()
+        );
     }
     public User toUserEntity(CreateStudentDto dto, String password){
         User user = new User();
