@@ -34,7 +34,7 @@ public class BranchService {
                 .toList();
     }
 
-    public BranchDto create(CreateBranchDto dto){
+    public BranchDto createBranch(CreateBranchDto dto){
         var entity = branchMapper.toBranchEntity(dto);
         Branch savedEntity = branchRepository.save(entity);
         return branchMapper.toBranchDto(savedEntity);

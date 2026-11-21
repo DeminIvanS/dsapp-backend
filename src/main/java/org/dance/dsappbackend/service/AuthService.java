@@ -7,6 +7,7 @@ import org.dance.dsappbackend.dto.LoginRequest;
 import org.dance.dsappbackend.dto.RegisterRequest;
 import org.dance.dsappbackend.dto.RefreshRequest;
 import org.dance.dsappbackend.entity.User;
+import org.dance.dsappbackend.enums.Role;
 import org.dance.dsappbackend.repository.UserRepository;
 import org.dance.dsappbackend.security.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,7 +50,7 @@ public class AuthService {
         if(request.role() != null){
             user.setRole(request.role());
         }else{
-            user.setRole(User.Role.ROLE_USER);
+            user.setRole(Role.ROLE_USER);
         }
         userRepository.save(user);
 

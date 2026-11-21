@@ -4,6 +4,8 @@ package org.dance.dsappbackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.dance.dsappbackend.dto.CreateHallDto;
+import org.dance.dsappbackend.dto.CreatedUserDto;
 import org.dance.dsappbackend.dto.HallDto;
 import org.dance.dsappbackend.service.HallService;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +39,8 @@ public class HallController {
 
     @PostMapping
     @Operation(summary = "Создать новый зал", description = "создает новый зал, доступно только для ROLE_ADMIN")
-    public HallDto create(@RequestBody HallDto dto) {
-        return hallService.create(dto);
+    public HallDto create(@RequestBody CreateHallDto dto) {
+        return hallService.createHall(dto);
     }
 
     @PutMapping("/{id}")

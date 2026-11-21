@@ -19,13 +19,12 @@ public class GroupMapper {
     }
 
     public GroupDto toGroupDto(Group group){
-        GroupDto dto = new GroupDto();
-        dto.setId(group.getId());
-        dto.setBranchId(group.getBranch().getId());
-        dto.setTeacherId(group.getTeacher().getId());
-        dto.setName(group.getName());
-        dto.setAgeRange(group.getAgeRange());
-        dto.setCreatedAt(group.getCreatedAt());
-        return dto;
+        return new GroupDto(
+                group.getId(),
+                group.getBranch().getId(),
+                group.getTeacher().getId(),
+                group.getName(),
+                group.getAgeRange(),
+                group.getCreatedAt());
     }
 }

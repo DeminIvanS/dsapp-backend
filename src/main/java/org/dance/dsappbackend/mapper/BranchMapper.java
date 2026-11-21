@@ -10,18 +10,15 @@ public class BranchMapper {
 
     public Branch toBranchEntity (CreateBranchDto dto){
         Branch branch = new Branch();
-        branch.setName(branch.getName());
-        branch.setAddress(branch.getAddress());
-
+        branch.setName(dto.name());
+        branch.setAddress(dto.address());
         return branch;
     }
     public BranchDto toBranchDto(Branch branch){
-        BranchDto dto = new BranchDto();
-        dto.setId(branch.getId());
-        dto.setName(branch.getName());
-
-        dto.setAddress(branch.getAddress());
-        dto.setCreatedAt(branch.getCreatedAt());
-        return dto;
+        return new BranchDto(
+                branch.getId(),
+                branch.getName(),
+                branch.getAddress(),
+                branch.getCreatedAt());
     }
 }

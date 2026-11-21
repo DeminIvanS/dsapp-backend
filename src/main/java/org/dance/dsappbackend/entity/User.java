@@ -1,6 +1,7 @@
 package org.dance.dsappbackend.entity;
 
 import jakarta.persistence.*;
+import org.dance.dsappbackend.enums.Role;
 
 
 @Entity
@@ -25,12 +26,6 @@ public class User {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    public enum Role {
-        ROLE_USER,
-        ROLE_ADMIN,
-        ROLE_TEACHER,
-        ROLE_STUDENT
-    }
 
     public String getUsername() {
         return username;

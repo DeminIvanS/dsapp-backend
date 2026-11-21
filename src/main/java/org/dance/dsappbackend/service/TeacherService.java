@@ -50,9 +50,9 @@ public class TeacherService {
     public CreatedUserDto createTeacher(CreateTeacherDto dto) {
         String tempPassword = passwordGenerator.generatePassword();
         String passwordHash = passwordEncoder.encode(tempPassword);
-        User user = dto.toUserEntity(passwordHash);
+        User user = teacherMapper.toUserEntity(dto, passwordHash);
         User savedUser = userRepository.save(user);
-        Teacher teacher = dto.toTeacherEntity(savedUser);
+        Teacher teacher = teacherMapper.toTeacherEntity(dto, savedUser);
         Teacher savedTeacher = teacherRepository.save(teacher);
         return new CreatedUserDto(savedUser.getUsername(), tempPassword);
     }
@@ -70,9 +70,9 @@ public class TeacherService {
     }
 
     public void updateEntityFromDto(TeacherDto dto, Teacher teacher) {
-        teacher.setFirstName(dto.getFirstName());
-        teacher.setLastName(dto.getLastName());
-        teacher.setPatronymic(dto.getPatronymic());
+        teacher.setFirstName(dto.firstName());
+        teacher.setLastName(dto.lastName());
+        teacher.setPatronymic(dto.patronymic());
 
     }
 

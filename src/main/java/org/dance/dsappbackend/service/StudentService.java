@@ -50,9 +50,9 @@ public class StudentService {
     public CreatedUserDto createStudent(CreateStudentDto dto) {
         String tempPassword = passwordGenerator.generatePassword();
         String passwordHash = passwordEncoder.encode(tempPassword);
-        User user = dto.toUserEntity(passwordHash);
+        User user = studentMapper.toUserEntity(dto, passwordHash);
         User savedUser = userRepository.save(user);
-        Student student = dto.toStudentEntity(savedUser);
+        Student student = studentMapper.toStudentEntity(dto, savedUser);
         Student savedStudent = studentRepository.save(student);
         return new CreatedUserDto(savedUser.getUsername(), tempPassword);
     }
@@ -69,13 +69,13 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
     public void updateEntityFromDto(StudentDto dto, Student student) {
-        student.setFirstName(dto.getFirstName());
-        student.setLastName(dto.getLastName());
-        student.setPatronymic(dto.getPatronymic());
-        student.setBirthdate(dto.getBirthdate());
-        student.setParentName(dto.getParentName());
-        student.setPhone(dto.getPhone());
-        student.setReferralSource(dto.getReferralSource());
+        student.setFirstName(dto.firstName());
+        student.setLastName(dto.lastName());
+        student.setPatronymic(dto.patronymic());
+        student.setBirthdate(dto.birthdate());
+        student.setParentName(dto.parentName());
+        student.setPhone(dto.phone());
+        student.setReferralSource(dto.referralSource());
 
     }
 }

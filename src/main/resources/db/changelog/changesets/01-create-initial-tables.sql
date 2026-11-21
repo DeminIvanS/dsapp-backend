@@ -25,51 +25,52 @@ CREATE TABLE if not exists users (
 );
 
 CREATE TABLE if not exists branches (
-                          id BIGSERIAL PRIMARY KEY,
-                          name VARCHAR(100) NOT NULL,
-                          address VARCHAR(255) NOT NULL,
-                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                        id BIGSERIAL PRIMARY KEY,
+                        name VARCHAR(100) NOT NULL,
+                        address VARCHAR(255) NOT NULL,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE if not exists price_list_items (
-                                  id BIGSERIAL PRIMARY KEY,
-                                  name VARCHAR(255) NOT NULL,
-                                  price NUMERIC(10, 2) NOT NULL,
-                                  is_active BOOLEAN NOT NULL DEFAULT TRUE,
-                                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS subscription_plans (
+                        id BIGSERIAL PRIMARY KEY,
+                        name VARCHAR(255) NOT NULL,
+                        price NUMERIC(10, 2) NOT NULL,
+                        billing_mode VARCHAR(10) NOT NULL,
+                        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE if not exists teachers (
-                          id BIGSERIAL PRIMARY KEY,
-                          user_id BIGINT NOT NULL UNIQUE,
-                          first_name VARCHAR(100) NOT NULL,
-                          last_name VARCHAR(100) NOT NULL,
-                          patronymic VARCHAR(100),
-                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          CONSTRAINT fk_teachers_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                        id BIGSERIAL PRIMARY KEY,
+                        user_id BIGINT NOT NULL UNIQUE,
+                        first_name VARCHAR(100) NOT NULL,
+                        last_name VARCHAR(100) NOT NULL,
+                        patronymic VARCHAR(100),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        CONSTRAINT fk_teachers_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE if not exists students (
-                          id BIGSERIAL PRIMARY KEY,
-                          user_id BIGINT NOT NULL UNIQUE,
-                          first_name VARCHAR(100) NOT NULL,
-                          last_name VARCHAR(100) NOT NULL,
-                          patronymic VARCHAR(100),
-                          birth_date DATE NOT NULL,
-                          parent_name VARCHAR(255) NOT NULL,
-                          phone VARCHAR(20) NOT NULL,
-                          referral_source VARCHAR(255),
-                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          CONSTRAINT fk_students_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                        id BIGSERIAL PRIMARY KEY,
+                        user_id BIGINT NOT NULL UNIQUE,
+                        first_name VARCHAR(100) NOT NULL,
+                        last_name VARCHAR(100) NOT NULL,
+                        patronymic VARCHAR(100),
+                        birth_date DATE NOT NULL,
+                        parent_name VARCHAR(255) NOT NULL,
+                        phone VARCHAR(20) NOT NULL,
+                        referral_source VARCHAR(255),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        CONSTRAINT fk_students_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE if not exists halls (
-                       id BIGSERIAL PRIMARY KEY,
-                       branch_id BIGINT NOT NULL,
-                       name VARCHAR(100) NOT NULL,
-                       description VARCHAR(255),
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                       CONSTRAINT fk_halls_branch FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE RESTRICT
+                        id BIGSERIAL PRIMARY KEY,
+                        branch_id BIGINT NOT NULL,
+                        name VARCHAR(100) NOT NULL,
+                        description VARCHAR(255),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        CONSTRAINT fk_halls_branch FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE if not exists groups (
@@ -135,14 +136,20 @@ CREATE TABLE if not exists attendance (
 CREATE TABLE if not exists charges (
                          id BIGSERIAL PRIMARY KEY,
                          student_id BIGINT NOT NULL,
-                         price_list_item_id BIGINT NOT NULL,
+                         subscription_plan_id BIGINT NOT NULL,
                          amount NUMERIC(10, 2) NOT NULL,
                          is_paid BOOLEAN NOT NULL DEFAULT FALSE,
-                         created_by BIGINT NOT NULL,
+                         created_by BIGINT,
                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         paid_by BIGINT,
+                         group_id BIGINT,
+                         period DATE NOT NULL,
+                         paid_at TIMESTAMP,
                          CONSTRAINT fk_charges_student FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE RESTRICT,
-                         CONSTRAINT fk_charges_item FOREIGN KEY (price_list_item_id) REFERENCES price_list_items(id) ON DELETE RESTRICT,
-                         CONSTRAINT fk_charges_admin FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT
+                         CONSTRAINT fk_charges_item FOREIGN KEY (subscription_plan_id) REFERENCES subscription_plans(id) ON DELETE RESTRICT,
+                         CONSTRAINT fk_charges_admin FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT,
+                         CONSTRAINT fk_charges_user FOREIGN KEY (paid_by) REFERENCES users(id) ON DELETE RESTRICT,
+                         CONSTRAINT fk_charges_group FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE if not exists payments (
@@ -163,6 +170,24 @@ CREATE TABLE if not exists payment_charges (
                                  CONSTRAINT fk_pc_payment FOREIGN KEY (payment_id) REFERENCES payments(id) ON DELETE CASCADE,
                                  CONSTRAINT fk_pc_charge FOREIGN KEY (charge_id) REFERENCES charges(id) ON DELETE RESTRICT
 );
-CREATE UNIQUE INDEX ux_price_list_items_active_name
-    ON price_list_items (name)
-    WHERE is_active = TRUE;
+
+CREATE TABLE IF NOT EXISTS group_subscriptions (
+                        group_id BIGINT NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+                        subscription_plan_id BIGINT NOT NULL REFERENCES subscription_plans(id) ON DELETE CASCADE,
+                        PRIMARY KEY (group_id, subscription_plan_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS charges (
+                        id BIGSERIAL PRIMARY KEY,
+                        student_id BIGINT NOT NULL REFERENCES students(id),
+                        subscription_plan_id BIGINT NOT NULL REFERENCES subscription_plans(id),
+                        group_id BIGINT REFERENCES groups(id),
+                        amount NUMERIC(10, 2) NOT NULL,
+                        period DATE NOT NULL,
+                        is_paid BOOLEAN NOT NULL DEFAULT FALSE,
+                        created_by BIGINT REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        paid_by BIGINT REFERENCES users(id),
+                        paid_at TIMESTAMP
+);

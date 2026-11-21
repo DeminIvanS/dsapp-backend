@@ -9,34 +9,41 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 public class Group {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "branch_id",nullable = false)
+    @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id",nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
     private String name;
+
     @Column(name = "age_range")
     private String ageRange;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "student_groups",
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "group_subscriptions",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscription_plan_id"))
+    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
+
     public Group() {
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     public Long getId() {
@@ -86,4 +93,21 @@ public class Group {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<SubscriptionPlan> getSubscriptionPlans() {
+        return subscriptionPlans;
+    }
+
+    public void setSubscriptionPlans(List<SubscriptionPlan> subscriptionPlans) {
+        this.subscriptionPlans = subscriptionPlans;
+    }
 }
+
