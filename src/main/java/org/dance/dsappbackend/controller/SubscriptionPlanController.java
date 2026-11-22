@@ -52,4 +52,6 @@ public class SubscriptionPlanController {
     public void delete(@PathVariable Long id) {
         planService.delete(id);
     }
+
+
 }
