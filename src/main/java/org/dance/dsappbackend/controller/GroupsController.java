@@ -6,12 +6,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.dance.dsappbackend.dto.CreateGroupDto;
 import org.dance.dsappbackend.dto.GroupDto;
 import org.dance.dsappbackend.service.GroupService;
+import org.dance.dsappbackend.service.SubscriptionPlanService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Tag(name = "Группы", description = "Управление группами школы")
 @SecurityRequirement(name = "bearerAuth")
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/api/groups")
 public class GroupsController {
@@ -20,7 +23,7 @@ public class GroupsController {
 
     public GroupsController(GroupService groupService) {
         this.groupService = groupService;
-    }
+            }
 
     @GetMapping("/{id}")
     @Operation(summary = "Получить группу по id", description = "возвращает группу по id, доступно только для ROLE_ADMIN")
@@ -50,5 +53,12 @@ public class GroupsController {
     @Operation(summary = "Удалить группу по id", description = "удаляет группу, доступно только для ROLE_ADMIN")
     public void delete(@PathVariable Long id) {
         groupService.delete(id);
+    }
+
+    @PostMapping("/{groupId}/subscription-plans/{planId}")
+    @Operation(summary = "Привязать абонемент к группе", description = "Привязывает базовый абонемент к группе, доступно только для ROLE_ADMIN")
+    public void addSubscriptionPlan(@PathVariable Long groupId, @PathVariable Long planId){
+        groupService.addSubscriptionPlan(groupId, planId);
+
     }
 }
